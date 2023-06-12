@@ -1,9 +1,9 @@
-# SFC Brasil
+# SCF Brasil
 
 
 > Breve descrição do projeto.
 
-Projeto SFC Brasil é uma aplicação desenvolvida com Node.js e Express.js para SFC. A aplicação segue os princípios do clean code e utiliza uma arquitetura modular. Foi implementado o graceful shutdown para garantir um encerramento correto da aplicação. O projeto possui poucas dependências para manter um controle mais eficiente.
+Projeto SCF Brasil é uma aplicação desenvolvida com Node.js e Express.js para SCF. A aplicação segue os princípios do clean code e utiliza uma arquitetura modular. Foi implementado o graceful shutdown para garantir um encerramento correto da aplicação. O projeto possui poucas dependências para manter um controle mais eficiente.
 
 ## Recursos Principais
 
