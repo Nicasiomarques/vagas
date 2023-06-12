@@ -1,10 +1,12 @@
 import { createServer } from 'http';
+import 'dotenv/config'
+
 import app from './app.js'
 
 const server = createServer(app)
 
-const port = 3000;
-const shutdownTimeout = 5000; // 5 seconds
+const port = process.env.PORT || 3000;
+const shutdownTimeout = process.env.SHUTDOWN_TIMEOUT || 5000
 
 const gracefulShutdown = () => {
   console.log('Received termination signal. Starting graceful shutdown...');
