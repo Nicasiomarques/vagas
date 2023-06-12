@@ -1,0 +1,212 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SCF Brazil API de Gerenciamento de Usuarios",
+    "description": "A API SCF Brazil é um projeto desenvolvido em Node.js com o microframework Express.js para manipulação de dados do SCF Brazil e gerenciamento de usuários.\n\n**Recursos e Características Principais:**\n\n- **Modularização:** A aplicação é desenvolvida seguindo uma abordagem modular, facilitando a adição, remoção e manutenção de funcionalidades. Cada componente possui responsabilidades claramente definidas, o que torna o código mais organizado e escalável.\n\n- **Padrões de Código Limpo:** O projeto adere a padrões de código limpo, seguindo boas práticas de programação. Isso resulta em um código legível, compreensível e de fácil manutenção, promovendo a consistência e qualidade do software.\n\n- **Suporte a Graceful Shutdown:** A aplicação é capaz de ser encerrada de forma segura, permitindo que todas as operações em andamento sejam concluídas antes do fechamento. Isso evita interrupções bruscas e preserva a integridade dos dados.\n\n- **Serviço de Health Check:** É disponibilizado um serviço de Health Check para monitorar o estado da aplicação e seus componentes. Isso facilita a detecção e solução de problemas em tempo hábil, garantindo a disponibilidade e o desempenho adequados.\n\n- **Controle de Acesso a Rotas Sensíveis:** Implementa um controle de acesso para garantir que apenas usuários autorizados possam acessar rotas sensíveis. Essa medida de segurança é fundamental para proteger informações sensíveis e manter a integridade dos dados manipulados pela aplicação.\n\n- **Mínimo de Bibliotecas:** O projeto tem o foco em utilizar o mínimo de bibliotecas possíveis, mantendo o código leve e controlando as dependências trazendo apenas o necessário. Isso contribui para uma aplicação mais eficiente e de melhor desempenho.\n\n**Tecnologias Utilizadas:**\n\n- **Node.js:** Ambiente de execução JavaScript conhecido por sua escalabilidade e desempenho.\n\n- **Express.js:** Microframework utilizado para facilitar o desenvolvimento de aplicações web e APIs.\n\n- **Swagger:** Ferramenta utilizada para criar a documentação da API, promovendo uma comunicação eficiente entre desenvolvedores e usuários da aplicação.",
+    "termsOfService": "https://scfbrazil.com/",
+    "contact": {
+      "email": "nicasiomarques18@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/",
+      "description": "Servidor de teste local"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "summary": "Obter todos os usuários",
+        "description": "Esta rota retorna um array contendo todos os usuários registrados no sistema.\n\nA resposta inclui uma lista de objetos de usuário, cada um contendo as propriedades 'id', 'name' e 'job'.",
+        "tags": ["Users"],
+        "responses": {
+          "200": {
+            "description": "Array de usuários obtido com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acesso não autorizado. Caso o header 'level_permission_key' esteja ausente ou contenha um valor inválido, uma resposta com código 401 será retornada."
+          }
+        }
+      },
+      "post": {
+        "summary": "Criar um novo usuário",
+        "description": "Esta rota permite criar um novo usuário no sistema.\n\nAo chamar esta rota, você deve fornecer os dados do usuário no corpo da solicitação, incluindo o nome e a função do usuário. O sistema criará um novo registro de usuário com um ID único e retornará uma resposta com código 201 para indicar que o usuário foi criado com sucesso.\n\nCaso algum campo obrigatório esteja faltando ou ocorra um erro de validação, uma resposta com código 400 será retornada.",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "name": "Adelina Manuel",
+                    "job": "Recursos Humanos"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso! A resposta com código 201 indica que o usuário foi criado com sucesso no sistema."
+          },
+          "400": {
+            "description": "Erro de validação. Caso algum campo obrigatório esteja faltando ou ocorra um erro de validação, uma resposta com código 400 será retornada."
+          }
+        }
+      },
+      "delete": {
+        "summary": "Excluir um usuário",
+        "description": "Esta rota permite excluir um usuário existente no sistema.\n\nAo chamar esta rota, você deve fornecer o nome do usuário no corpo da solicitação. O sistema buscará o usuário correspondente e o removerá do sistema. Caso o usuário não seja encontrado ou ocorra um erro durante o processo de exclusão, uma resposta com o código de status apropriado será retornada.\n\nEsta rota requer um header 'level_permission_key' com um dos seguintes valores: 'admin', 'edit' ou 'delete', para autorizar o acesso.",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "name": "João Oliveira"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Usuário excluído com sucesso. A resposta com código 200 indica que o usuário foi excluído com sucesso do sistema."
+          },
+          "403": {
+            "description": "Acesso não autorizado. Caso o header 'level_permission_key' esteja ausente ou contenha um valor inválido, uma resposta com código 403 será retornada."
+          }
+        }
+      }
+    },
+    "/users/:id": {
+      "put": {
+        "summary": "Atualizar um usuário existente",
+        "description": "Esta rota permite atualizar os detalhes de um usuário existente no sistema.\n\nAo chamar esta rota, você deve fornecer os dados atualizados do usuário no corpo da solicitação, incluindo o ID, nome e função. O sistema buscará o usuário correspondente e atualizará suas informações.\n\nCaso o usuário não seja encontrado ou ocorra um erro de validação, uma resposta com código 400 será retornada.\n\nEsta rota requer um header 'level_permission_key' com um dos seguintes valores: 'admin', 'edit' ou 'delete', para autorizar o acesso.",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "name": "Idalio Barbosa",
+                    "job": "Analista de sistemas"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Usuário atualizado com sucesso. A resposta com código 200 indica que o usuário foi atualizado com sucesso no sistema."
+          },
+          "403": {
+            "description": "Acesso não autorizado. Caso o header 'level_permission_key' esteja ausente ou contenha um valor inválido, uma resposta com código 403 será retornada."
+          }
+        }
+      }
+    },
+    "/users/access": {
+      "get": {
+        "summary": "Registro de acesso de usuários",
+        "description": "Esta rota registra o acesso de um usuário e incrementa o contador de acessos para o usuário especificado.\n\nAo chamar esta rota, você deve fornecer o nome do usuário como um parâmetro de consulta (query param). O sistema buscará o usuário correspondente e incrementará o contador de acessos.\n\nCaso o usuário não seja encontrado, uma resposta com código 404 será retornada.",
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "O nome do usuário"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Registro de acesso realizado com sucesso."
+          },
+          "404": {
+            "description": "Usuário não encontrado. Caso o usuário não exista no sistema, uma resposta com código 404 será retornada."
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Verificar a saúde do sistema",
+        "description": "Esta rota verifica a saúde do sistema e retorna o status de dependência.\n\nA resposta inclui o nome da dependência, se está saudável (healthy) ou não, e o timestamp da verificação.",
+        "tags": ["Healthcheck"],
+        "responses": {
+          "200": {
+            "description": "Retorna o status de saúde do sistema.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "healthy": {
+                      "type": "boolean"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "job": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "job"]
+      }
+    }
+  }
+}
