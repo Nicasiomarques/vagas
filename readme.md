@@ -1,43 +1,89 @@
-# Este é um teste para desenvolvedores
+# SFC Brasil
 
-# possui 5 testes
 
-## Introdução
+> Breve descrição do projeto.
 
-Este projeto possui um banco de dados fake em fakeData.js com apenas um registro.
-A ideia é melhorar e o CRUD escrito nos 4 arquivos de teste abaixo.
+Projeto SFC Brasil é uma aplicação desenvolvida com Node.js e Express.js para SFC. A aplicação segue os princípios do clean code e utiliza uma arquitetura modular. Foi implementado o graceful shutdown para garantir um encerramento correto da aplicação. O projeto possui poucas dependências para manter um controle mais eficiente.
 
-Será a validada a forma de escrita de código.
-Escreva códigos que humanos consigam entender.
+## Recursos Principais
 
-Fique a vontade para fazer modificaçoes nos serviços, comentários em código, estrutura, mas seja objetivo.
+- **Node.js**
+- **Express.js**
+- **Swagger**
 
-## teste1.js
+## Instalação
 
-GET em /user 
+1. Clone este repositório:
 
-Possuimos neste arquivo um serviço que faz uma busca no banco fake e retorna um registro.
-Este código funciona, mas é possivel melhorar.
-Veja o que pode deixar ele melhor escrito e mais performatico.
+   ```shell
+   git clone https://github.com/Nicasiomarques/vagas .
+   ```
 
-## teste2.js
+2. Instale as dependências:
 
-POST em /users, descubra a intenção dele e o corrija.
+   ```shell
+   npm install
+   ```
 
-## teste3.js
+3. Crie um arquivo de ambiente:
 
-Este procura um usuário e o deleta da base.
-Retorne sucesso para o client caso realmente tenha sido excluido e deixe o código mais performatico.
+   ```shell
+   cp .env.example .env
+   ```
 
-## teste4.js
+4. Preencha as variáveis de ambiente no arquivo `.env` com as informações necessárias.
 
-Atualiza os dados de um usuário especifico.
+## Executando a Aplicação
 
-## teste5.js
+### Modo de Desenvolvimento
 
-Retorne quantas vezes determinado usuário foi lido no teste1.
+Execute o seguinte comando para iniciar a aplicação no modo de desenvolvimento:
 
-## teste 6
+```shell
+npm run dev
+```
 
-Definina uma forma de criar permissão para o usuario, defina se o usuário pode deletar ou atualizar usuários. Crie um middleware para validar essas permissões e adicione no teste4 e teste3.
+### Modo de Produção
 
+Execute o seguinte comando para iniciar a aplicação no modo de produção:
+
+```shell
+npm start
+```
+
+## Documentação da API
+
+A API do projeto está documentada utilizando o Swagger. Para acessar a documentação, acesse [Swagger documentação online](https://vagas-port.up.railway.app/api-docs/).
+
+Exemplo de uso da API:
+
+- **Base URL**: https://vagas-port.up.railway.app/
+
+1. Endpoint de exemplo:
+   - **GET** `/users`
+   - Descrição: Retorna todos os usuários cadastrados.
+   - Exemplo de uso: `GET https://vagas-port.up.railway.app/users`
+
+2. Endpoint de exemplo:
+   - **POST** `/api/users`
+   - Descrição: Cria um novo usuário.
+   - Corpo da requisição (JSON):
+     ```json
+     {
+       "name": "Nicásio Silva",
+       "job": "Developer",
+     }
+     ```
+   - Exemplo de uso: `POST https://vagas-port.up.railway.app/users`
+
+## Contato
+- E-mail: nicasiomarques18@gmail.com
+- LinkedIn: [Nicasio Silva](https://www.linkedin.com/in/nicasio-silva-70320a182/)
+
+## Licença
+
+Este projeto está licenciado sob a [MIT License](LICENSE).
+
+---
+
+*Observação: Devido à simplicidade do projeto, alguns recursos como arquiteturas, testes automatizados, replicação, cache, autenticação JWT, entre outros, não foram implementados para manter a objectividade do projecto.*
